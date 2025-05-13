@@ -21,11 +21,25 @@ function renderTodos() {
     const pending = todos
         .filter(t => !t.completed)
         .sort((a, b) => priorityValue(b.priority) - priorityValue(a.priority));
-
     const completed = todos.filter(t => t.completed);
 
-    pending.forEach(todo => pendingList.appendChild(createTodoItem(todo)));
-    completed.forEach(todo => completedList.appendChild(createTodoItem(todo)));
+    if (pending.length === 0) {
+        const msg = document.createElement('p');
+        msg.textContent = 'No pending items.';
+        msg.className = 'text-center text-muted';
+        pendingList.appendChild(msg);
+    } else {
+        pending.forEach(todo => pendingList.appendChild(createTodoItem(todo)));
+    }
+
+    if (completed.length === 0) {
+        const msg = document.createElement('p');
+        msg.textContent = 'No completed items.';
+        msg.className = 'text-center text-muted';
+        completedList.appendChild(msg);
+    } else {
+        completed.forEach(todo => completedList.appendChild(createTodoItem(todo)));
+    }
 }
 
 function createTodoItem(todo) {

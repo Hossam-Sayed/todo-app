@@ -1,4 +1,7 @@
 function initEventHandlers() {
+
+    renderTodos();
+    
     const form = document.getElementById('todo-form');
     const searchInput = document.getElementById('search-input');
 
