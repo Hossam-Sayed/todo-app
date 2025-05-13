@@ -1,0 +1,49 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.list-group-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.badge {
+    position: relative;
+    display: inline-block;
+    min-width: 72px;
+    text-align: center;
+    padding: 0.4em 0.7em;
+    font-weight: 500;
+    border-radius: 0.5rem;
+}
+
+.badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    opacity: 0.2;
+    background-color: currentColor;
+}
+
+.priority-low {
+    color: green;
+}
+
+.priority-medium {
+    color: orange;
+}
+
+.priority-high {
+    color: red;
+}
+
+@media (max-width: 768px) {
+    .btn-primary {
+        width: 100%;
+    }
+}
