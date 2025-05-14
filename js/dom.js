@@ -1,4 +1,5 @@
 import { db } from './firebase.js';
+import { fetchTodos } from './main.js';
 import {
     addDoc,
     collection,
@@ -6,7 +7,6 @@ import {
     updateDoc,
     serverTimestamp,
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-import { fetchTodos } from './main.js';
 
 export const todos = [];
 

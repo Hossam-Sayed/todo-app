@@ -1,7 +1,7 @@
 import { db } from './firebase.js';
-import { getDocs, collection } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 import { todos, renderTodos } from './dom.js';
 import { initEventHandlers } from './handlers.js';
+import { getDocs, collection } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
 export const fetchTodos = async () => {
     try {
