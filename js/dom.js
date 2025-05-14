@@ -20,7 +20,7 @@ export const addTodoToFirestore = async (text, priority) => {
     }
 };
 
-export const renderTodos = () => {
+export const renderTodos = (query = '') => {
     const pendingList = document.getElementById('pending-list');
     const completedList = document.getElementById('completed-list');
 
@@ -28,8 +28,11 @@ export const renderTodos = () => {
     completedList.innerHTML = '';
 
     const byPriority = (a, b) => priorityValue(b.priority) - priorityValue(a.priority);
-    const pending = todos.filter(t => !t.completed).sort(byPriority);
-    const completed = todos.filter(t => t.completed);
+    const pending = todos
+        .filter(t => !t.completed && t.title.toLowerCase().includes(query))
+        .sort(byPriority);
+    const completed = todos
+        .filter(t => t.completed && t.title.toLowerCase().includes(query));
 
     renderList(pendingList, pending, 'No pending todos');
     renderList(completedList, completed, 'No completed todos');
@@ -78,11 +81,7 @@ const createTodoItem = todo => {
 };
 
 export const filterTodos = query => {
-    const pendingList = document.getElementById('pending-list');
-    [...pendingList.children].forEach(li => {
-        const text = li.firstChild.textContent.toLowerCase();
-        li.style.display = text.includes(query) ? '' : 'none';
-    });
+    renderTodos(query);
 };
 
 const priorityValue = level => ({
