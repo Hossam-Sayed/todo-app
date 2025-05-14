@@ -4,6 +4,7 @@ import {
     collection,
     doc,
     updateDoc,
+    serverTimestamp,
 } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 import { fetchTodos } from './main.js';
 
@@ -11,7 +12,7 @@ export const todos = [];
 
 export const addTodoToFirestore = async (text, priority) => {
     try {
-        const todo = { title: text, completed: false, priority };
+        const todo = { title: text, completed: false, priority, createdAt: serverTimestamp() };
         await addDoc(collection(db, 'todos'), todo);
         await fetchTodos();
     } catch (err) {
