@@ -1,17 +1,25 @@
-let todos = [];
+import { db } from './firebase.js';
+import { addDoc, collection, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { fetchTodos } from './main.js';
 
-function addTodo(text, priority) {
-    const todo = {
-        id: Date.now(),
-        text,
-        completed: false,
-        priority,
-    };
-    todos.push(todo);
-    renderTodos();
+export let todos = [];
+
+export async function addTodoToFirestore(text, priority) {
+    try {
+        const todo = {
+            title: text,
+            completed: false,
+            priority,
+        };
+        await addDoc(collection(db, 'todos'), todo);
+        await fetchTodos();
+    } catch (err) {
+        console.error("Error adding todo:", err);
+        alert("Could not add todo.");
+    }
 }
 
-function renderTodos() {
+export function renderTodos() {
     const pendingList = document.getElementById('pending-list');
     const completedList = document.getElementById('completed-list');
 
@@ -47,8 +55,8 @@ function createTodoItem(todo) {
     li.className = 'list-group-item';
 
     const span = document.createElement('span');
-    span.className = 'me-auto'
-    span.textContent = todo.text;
+    span.className = 'me-auto';
+    span.textContent = todo.title;
 
     const badge = document.createElement('span');
     badge.className = `badge priority-${todo.priority.toLowerCase()}`;
@@ -57,9 +65,18 @@ function createTodoItem(todo) {
     const btn = document.createElement('button');
     btn.className = 'btn btn-sm btn-outline-success';
     btn.textContent = todo.completed ? 'Undo' : 'Done';
-    btn.onclick = () => {
-        todo.completed = !todo.completed;
-        renderTodos();
+
+    btn.onclick = async () => {
+        try {
+            const todoRef = doc(db, 'todos', todo.id);
+            todo.completed = !todo.completed;
+            renderTodos();
+            await updateDoc(todoRef, todo);
+            await fetchTodos();
+        } catch (err) {
+            console.error('Failed to update todo:', err);
+            alert('Could not update todo status.');
+        }
     };
 
     li.appendChild(span);
@@ -68,7 +85,8 @@ function createTodoItem(todo) {
     return li;
 }
 
-function filterTodos(query) {
+
+export function filterTodos(query) {
     const pendingList = document.getElementById('pending-list');
     [...pendingList.children].forEach(li => {
         const text = li.firstChild.textContent.toLowerCase();
