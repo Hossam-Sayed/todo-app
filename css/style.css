@@ -10,12 +10,10 @@ body {
 
 .badge {
     position: relative;
-    display: inline-block;
     min-width: 72px;
     text-align: center;
     padding: 0.4em 0.7em;
     font-weight: 500;
-    border-radius: 0.5rem;
 }
 
 .badge::before {
@@ -40,10 +38,4 @@ body {
 
 .priority-high {
     color: red;
-}
-
-@media (max-width: 768px) {
-    .btn-primary {
-        width: 100%;
-    }
 }
