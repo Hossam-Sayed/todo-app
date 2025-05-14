@@ -25,7 +25,7 @@ function renderTodos() {
 
     if (pending.length === 0) {
         const msg = document.createElement('p');
-        msg.textContent = 'No pending items.';
+        msg.textContent = 'No pending todos';
         msg.className = 'text-center text-muted';
         pendingList.appendChild(msg);
     } else {
@@ -34,7 +34,7 @@ function renderTodos() {
 
     if (completed.length === 0) {
         const msg = document.createElement('p');
-        msg.textContent = 'No completed items.';
+        msg.textContent = 'No completed todos';
         msg.className = 'text-center text-muted';
         completedList.appendChild(msg);
     } else {
